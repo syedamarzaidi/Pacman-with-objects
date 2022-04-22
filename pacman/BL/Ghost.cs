@@ -17,6 +17,7 @@ namespace pacman.BL
             this.speed = speed;
             this.previousItem = previousItem;
             this.currentGhostCell = new Cell(X, Y, this.ghostCharacter);
+            this.mazeGrid = mazeGrid;
         }
         private int X;
         private int Y;
@@ -26,6 +27,7 @@ namespace pacman.BL
         private char previousItem;
         private float deltaChange;
         private Cell currentGhostCell;
+        private Grid mazeGrid;
         public void setGhostDirection(string ghostDirection)
         {
             this.ghostDirection = ghostDirection;
@@ -62,13 +64,16 @@ namespace pacman.BL
         {
             // Change
             currentGhostCell.setValue(' ');
-            Grid.maze[X, Y] = currentGhostCell;
-            Console.SetCursorPosition(getGhostY(), getGhostY());
+            mazeGrid.maze[X, Y] = currentGhostCell;
+            Console.SetCursorPosition(Y, X);
             Console.Write(' ');
         }
         public void draw()
         {
-            Console.SetCursorPosition(getGhostY(), getGhostX());
+            Cell c = new Cell(X, Y, ghostCharacter);
+            mazeGrid.maze[X, Y] = c;
+            Console.SetCursorPosition(Y, X);
+            Console.Write(ghostCharacter);
         }
         public void moveHorizontal()
         {
@@ -80,7 +85,7 @@ namespace pacman.BL
         }
         public int generateRandom()
         {
-
+            return 0;
         }
         public void moveSmart()
         {
@@ -88,7 +93,7 @@ namespace pacman.BL
         }
         public double calculateDistance(Cell currentGhostCell,Cell pacmanLocation)
         {
-
+            return 0;
         }
 
 

@@ -11,7 +11,7 @@ namespace pacman.BL
     {
         private int rowSize;
         private int colSize;
-        public static Cell[,] maze;
+       public Cell[,] maze;
 
         public Grid(int rowSize, int colSize, string path)
         {
@@ -73,7 +73,7 @@ namespace pacman.BL
         }
         public Cell findPacman()
         {
-            foreach (var s in Grid.maze)
+            foreach (var s in maze)
             {
                 if (s.isPacmanPresent())
                 {
@@ -84,7 +84,7 @@ namespace pacman.BL
         }
         public Cell findGhostPosition(char ghostCharacter)
         {
-            foreach (var s in Grid.maze)
+            foreach (var s in maze)
             {
                 if (s.isGhostPresent(ghostCharacter))
                 {
@@ -93,7 +93,7 @@ namespace pacman.BL
             }
             return null;
         }
-        public static void LoadMaze(string path)
+        public void LoadMaze(string path)
         {
             string line = "";
             StreamReader file = new StreamReader(path);
@@ -106,19 +106,19 @@ namespace pacman.BL
                     for (int y = 0; y < line.Length; y++)
                     {
                         Cell cell = new Cell(x, y, line[y]);
-                        Grid.maze[x, y] = cell;
+                        maze[x, y] = cell;
                     }
                 }
                 file.Close();
             }
         }
-        public static void draw()
+        public void draw()
         {
-            for (int x = 0; x < Grid.maze.GetLength(0); x++)
+            for (int x = 0; x < maze.GetLength(0); x++)
             {
-                for (int y = 0; y < Grid.maze.GetLength(1); y++)
+                for (int y = 0; y < maze.GetLength(1); y++)
                 {
-                    Console.Write(Grid.maze[x, y].getValue());
+                    Console.Write(maze[x, y].getValue());
                 }
                 Console.Write('\n');
             }

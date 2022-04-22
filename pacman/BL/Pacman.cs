@@ -45,9 +45,10 @@ namespace pacman.BL
         }
         public void draw()
         {
-            mazeGrid
-
-
+            Cell pacman = new Cell(x, y, 'P');
+            mazeGrid.maze[x, y] = pacman;
+            Console.SetCursorPosition(y, x);
+            Console.Write(pacman.getValue());
         }
 
     }
