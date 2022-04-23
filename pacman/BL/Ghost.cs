@@ -25,7 +25,7 @@ namespace pacman.BL
         private string ghostDirection;
         private char ghostCharacter;
         private float speed;
-        private char previousItem;
+        private char previousItem = ' ';
         private float deltaChange;
         private Cell currentGhostCell;
         private Grid mazeGrid;
@@ -48,37 +48,6 @@ namespace pacman.BL
         {
             this.X = X;
             this.Y = Y;
-        }
-        public void setPreviousItem(string direction)
-        {
-            if(direction == "up")
-            {
-                if ((mazeGrid.maze[X - 1, Y].getValue()) != '#')
-                {
-                    previousItem = mazeGrid.maze[X - 1, Y].getValue();
-                }
-            }
-            else if(direction == "down")
-            {
-                if ((mazeGrid.maze[X + 1, Y].getValue()) != '#')
-                {
-                    previousItem = mazeGrid.maze[X + 1, Y].getValue();
-                }
-            }
-            else if(direction == "left")
-            {
-                if ((mazeGrid.maze[X, Y - 1].getValue()) != '#')
-                {
-                    previousItem = mazeGrid.maze[X, Y - 1].getValue();
-                }
-            }
-            else if(direction == "right")
-            {
-                if ((mazeGrid.maze[X, Y + 1].getValue()) != '#')
-                {
-                    previousItem = mazeGrid.maze[X, Y + 1].getValue();
-                }
-                }
         }
         public void setGhostCharacter(char ghostCharacter)
         {
@@ -151,30 +120,24 @@ namespace pacman.BL
             Console.SetCursorPosition(Y, X);
             Console.Write(' ');
         }
-        public void showPreviousItem(string direction)
+        public void showPreviousItem()
         {
-            if(direction == "right")
-            {
-                Console.SetCursorPosition(Y - 1, X);
-            }
-            else if(direction == "left")
-            {
-                Console.SetCursorPosition(Y + 1, X);
-            }
-            else if(direction == "up")
-            {
-                Console.SetCursorPosition(X + 1, Y);
-            }
-            else if(direction == "down")
-            {
-                Console.SetCursorPosition(X - 1, Y);
-            }
+          //  currentGhostCell.setValue(previousItem);
+          //  mazeGrid.maze[X, Y] = currentGhostCell;
+            Console.SetCursorPosition(Y, X);
             Console.Write(previousItem);
+        }
+        public void setPreviousItem()
+        {
+            if ((mazeGrid.maze[X, Y].getValue()) == ' ' || (mazeGrid.maze[X, Y].getValue()) == '.')
+            {
+                previousItem = mazeGrid.maze[X, Y].getValue();
+            }
         }
         public void draw()
         {
             Cell c = new Cell(X, Y, ghostCharacter);
-            mazeGrid.maze[X, Y] = c;
+            mazeGrid.maze[X, Y].setValue(ghostCharacter);
             Console.SetCursorPosition(Y, X);
             Console.Write(ghostCharacter);
         }
@@ -208,35 +171,38 @@ namespace pacman.BL
         }
         public void moveLeft()
         {
-            remove();
-            setPreviousItem("left");
+            mazeGrid.maze[X, Y].setValue(previousItem);
+            showPreviousItem();
             setY(Y - 1);
+            setPreviousItem();
             draw();
-            showPreviousItem("left");
+            
         }
         public void moveRight()
         {
-           remove();
-            setPreviousItem("right");
-           setY(Y + 1); 
-           draw();
-            showPreviousItem("right");
+            mazeGrid.maze[X, Y].setValue(previousItem);
+            showPreviousItem();
+            setY(Y + 1);
+            setPreviousItem();
+            draw();
+            
+
         }
         public void moveUp()
         {
-            remove();
-            setPreviousItem("up");
+            mazeGrid.maze[X, Y].setValue(previousItem);
+            showPreviousItem();
             setX(X - 1);
+            setPreviousItem();
             draw();
-            showPreviousItem("up");
         }
         public void moveDown()
         {
-            remove();
-            setPreviousItem("down");
+            mazeGrid.maze[X, Y].setValue(previousItem);
+            showPreviousItem();
             setX(X + 1);
+            setPreviousItem();
             draw();
-            showPreviousItem("down");
         }
         public void moveVertical()
         {
