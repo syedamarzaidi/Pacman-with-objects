@@ -59,30 +59,30 @@ namespace pacman.BL
             Console.SetCursorPosition(y, x);
             Console.Write(pacmanCurrentCell.getValue());
         }
-        public void moveLeft()
+        public bool isNextObstacle(Cell next)
         {
-            remove();
-            setY(y - 1);
-            draw();
+            if ((mazeGrid.maze[next.getX(),next.getY()].getValue() == '#' || (mazeGrid.maze[getX(),getY()].getValue() == '%')))
+            {
+                return true;
+            }
+            return false;
         }
-        public void moveRight()
+        public void moveToNextCell(Cell current,Cell next)
         {
-            remove();
-            setY(y + 1);
-            draw();
+            if (!isNextObstacle(next))
+            {
+                mazeGrid.maze[current.getX(), current.getY()].setValue(' ');
+                Console.SetCursorPosition(current.getY(), current.getX());
+                Console.Write(' ');
+                if ((next.getValue()) == '.')
+                {
+                    score++;
+                }
+                x = next.getX();
+                y = next.getY();
+                draw();
+            }
+            
         }
-        public void moveUp()
-        {
-            remove();
-            setX(x - 1);
-            draw();
-        }
-        public void moveDown()
-        {
-            remove();
-            setX(x + 1);
-            draw();
-        }
-
     }
 }

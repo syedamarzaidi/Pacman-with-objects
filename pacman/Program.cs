@@ -32,7 +32,8 @@ namespace pacman
                 ghost1.move();//Move horizontal ghost
               ghost2.move();//move vertical ghost
                 ghost3.move();//move random ghost
-                //Console.ReadKey();
+                player.moveToNextCell(mazeGrid.findPacman(), mazeGrid.getDownCell(mazeGrid.findPacman()));
+                Console.ReadKey();
             }
            // Console.ReadKey();
         }

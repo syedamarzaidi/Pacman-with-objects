@@ -211,13 +211,13 @@ namespace pacman.BL
             int num = rd.Next(1, 5);
             return num;
         }
-        public void moveLeft()
+        public void  moveLeft()
         {
             mazeGrid.maze[X, Y].setValue(previousItem);
             showPreviousItem();
             setY(Y - 1);
             setPreviousItem();
-            draw();     
+            draw();   
         }
         public void moveRight()
         {
@@ -255,22 +255,5 @@ namespace pacman.BL
         {
             return 0;
         }
-        
-        /*
-        public void setGhostDirection(string ghostDirection)
-        {
-            this.ghostDirection = ghostDirection;
-        }
-        
-        public void setSpeed(float speed)
-        {
-            this.speed = speed;
-        }
-        public void setPreviousItem(char previousItem)
-        {
-            this.previousItem = previousItem;
-        } 
-        */
-        //Grid mazeGrid;
     }
 }

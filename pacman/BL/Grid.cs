@@ -41,7 +41,7 @@ namespace pacman.BL
             int x = c.getX();
             int y = c.getY();
             char value = c.getValue();
-            Cell leftCell = new Cell(x, y + 1, value);
+            Cell leftCell = new Cell(x, y - 1, value);
             return leftCell;
         }
         public Cell getRightCell(Cell c)
@@ -57,7 +57,7 @@ namespace pacman.BL
             int x = c.getX();
             int y = c.getY();
             char value = c.getValue();
-            Cell UpCell = new Cell(x, y + 1, value);
+            Cell UpCell = new Cell(x-1, y, value);
             return UpCell;
         }
         public Cell getDownCell(Cell c)
@@ -65,7 +65,7 @@ namespace pacman.BL
             int x = c.getX();
             int y = c.getY();
             char value = c.getValue();
-            Cell downCell = new Cell(x, y + 1, value);
+            Cell downCell = new Cell(x+1, y, value);
             return downCell;
         }
         public static void setArraySize(int rowSize, int colSize)
@@ -82,7 +82,7 @@ namespace pacman.BL
             }
             return null;
         }
-        public Cell findGhostPosition(char ghostCharacter)
+        public Cell findGhost(char ghostCharacter)
         {
             foreach (var s in maze)
             {
