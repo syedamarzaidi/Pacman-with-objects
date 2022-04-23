@@ -28,10 +28,6 @@ namespace pacman.BL
         {
             this.y = y;
         }
-        public void setScore(int score)
-        {
-            this.score = score;
-        }
         public void setXY(int x,int y)
         {
             this.x = x;
@@ -61,7 +57,7 @@ namespace pacman.BL
         }
         public bool isNextObstacle(Cell next)
         {
-            if ((mazeGrid.maze[next.getX(),next.getY()].getValue() == '#' || (mazeGrid.maze[getX(),getY()].getValue() == '%')))
+            if (((mazeGrid.maze[next.getX(), next.getY()].getValue() == '%') || (mazeGrid.maze[next.getX(),next.getY()].getValue() == '#')))
             {
                 return true;
             }
@@ -82,7 +78,49 @@ namespace pacman.BL
                 y = next.getY();
                 draw();
             }
-            
+        }
+        public void moveUp(Cell current,Cell next)
+        {
+            moveToNextCell(current, next);
+        }
+        public void moveLeft(Cell current,Cell next)
+        {
+            moveToNextCell(current, next);
+        }
+        public void moveRight(Cell current,Cell next)
+        {
+            moveToNextCell(current, next);
+        }
+        public void moveDown(Cell current,Cell next)
+        {
+            moveToNextCell(current, next);
+        }
+        public void move()
+        {
+          /*  Cell pacmanCurrentCell = mazeGrid.findPacman();
+            if (Keyboard.IsKeyPressed(Key.RightArrow))
+            {
+                moveRight(pacmanCurrentCell, mazeGrid.getRightCell(pacmanCurrentCell));
+            }
+            else if (Keyboard.IsKeyPressed(Key.LeftArrow))
+            {
+                moveLeft(pacmanCurrentCell, mazeGrid.getLeftCell(pacmanCurrentCell));
+            }
+            else if (Keyboard.IsKeyPressed(Key.UpArrow))
+            {
+                moveUp(pacmanCurrentCell, mazeGrid.getUpCell(pacmanCurrentCell));
+            }
+            else if (Keyboard.IsKeyPressed(Key.DownArrow))
+            {
+                moveDown(pacmanCurrentCell, mazeGrid.getDownCell(pacmanCurrentCell));
+            }
+            else if()
+            */
+        }
+        public void printScore()
+        {
+            Console.SetCursorPosition(5, 26);
+            Console.WriteLine("Score = :{0}", score);
         }
     }
 }

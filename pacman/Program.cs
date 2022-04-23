@@ -22,7 +22,7 @@ namespace pacman
             Ghost ghost3 = new Ghost(9, 24, 'R', " ", 0.8f, ' ', mazeGrid); //  Random moving ghost
             //Ghost ghost3 = new Ghost();
             mazeGrid.draw();
-            player.draw();
+           // player.draw();
             ghost1.draw();
             ghost2.draw();
             ghost3.draw();
@@ -32,8 +32,9 @@ namespace pacman
                 ghost1.move();//Move horizontal ghost
               ghost2.move();//move vertical ghost
                 ghost3.move();//move random ghost
-                player.moveToNextCell(mazeGrid.findPacman(), mazeGrid.getDownCell(mazeGrid.findPacman()));
-                Console.ReadKey();
+                              // player.moveToNextCell(mazeGrid.findPacman(), mazeGrid.getDownCell(mazeGrid.findPacman()));
+                              // Console.ReadKey();
+                player.printScore();
             }
            // Console.ReadKey();
         }

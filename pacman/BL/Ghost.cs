@@ -115,7 +115,6 @@ namespace pacman.BL
         }
         public void remove()
         {
-            // Change
             currentGhostCell.setValue(' ');
             mazeGrid.maze[X, Y] = currentGhostCell;
             Console.SetCursorPosition(Y, X);
@@ -123,8 +122,6 @@ namespace pacman.BL
         }
         public void showPreviousItem()
         {
-          //  currentGhostCell.setValue(previousItem);
-          //  mazeGrid.maze[X, Y] = currentGhostCell;
             Console.SetCursorPosition(Y, X);
             Console.Write(previousItem);
         }
@@ -149,6 +146,7 @@ namespace pacman.BL
             {
                 if(ghostCharacter == 'H')
                 {
+
                     moveHorizontal();
                 }
                 else if(ghostCharacter == 'V')
@@ -165,45 +163,48 @@ namespace pacman.BL
         public void moveHorizontal()
         {
             setGhostPosition(); //Reversing the direction of ghost if ghost is blocked
-            if(ghostMovingPosition == "left")
+            Cell ghostCurrentCell = mazeGrid.findGhost('H');
+            if (ghostMovingPosition == "left")
             {
-                moveLeft();
+                moveLeft(ghostCurrentCell,mazeGrid.getLeftCell(ghostCurrentCell));
             }
             else if(ghostMovingPosition == "right")
             {
-                moveRight();
+                moveRight(ghostCurrentCell,mazeGrid.getRightCell(ghostCurrentCell));
             }
         }
         public void moveVertical()
         {
             setGhostPosition(); //reversing the direction of ghost if ghost is blocked
+            Cell ghostCurrentCell = mazeGrid.findGhost('V');
             if (ghostMovingPosition == "up")
             {
-                moveUp();
+                moveUp(ghostCurrentCell,mazeGrid.getUpCell(ghostCurrentCell));
             }
             else if (ghostMovingPosition == "down")
             {
-                moveDown();
+                moveDown(ghostCurrentCell,mazeGrid.getDownCell(ghostCurrentCell));
             }
         }
         public void moveRandom()
         {
             int direction = getRandomNumber();
-            if(direction == 1)
+            Cell ghost = mazeGrid.findGhost('R');
+            if (direction == 1)
             {
-                moveRight();
+                moveRight(ghost,mazeGrid.getRightCell(ghost));
             }
             else if(direction == 2)
             {
-                moveLeft();
+                moveLeft(ghost,mazeGrid.getLeftCell(ghost));
             }
             else if(direction == 3)
             {
-                moveDown();
+                moveDown(ghost,mazeGrid.getDownCell(ghost));
             }
             else if(direction == 4)
             {
-                moveUp();
+                moveUp(ghost,mazeGrid.getUpCell(ghost));
             }
         }
         public int getRandomNumber()
@@ -211,37 +212,44 @@ namespace pacman.BL
             int num = rd.Next(1, 5);
             return num;
         }
-        public void  moveLeft()
+        public void moveGhostToNextCell(Cell current,Cell next)
         {
-            mazeGrid.maze[X, Y].setValue(previousItem);
-            showPreviousItem();
-            setY(Y - 1);
-            setPreviousItem();
-            draw();   
-        }
-        public void moveRight()
-        {
-            mazeGrid.maze[X, Y].setValue(previousItem);
-            showPreviousItem();
-            setY(Y + 1);
-            setPreviousItem();
+            if (!isObstacleNext(next))
+            {
+                mazeGrid.maze[current.getX(), current.getY()].setValue(previousItem);
+                Console.SetCursorPosition(current.getY(), current.getX());
+                Console.Write(previousItem);
+                X = next.getX();
+                Y = next.getY();
+                setPreviousItem();
+            }
             draw();
         }
-        public void moveUp()
+        public bool isObstacleNext(Cell next)
         {
-            mazeGrid.maze[X, Y].setValue(previousItem);
-            showPreviousItem();
-            setX(X - 1);
-            setPreviousItem();
-            draw();
+            if(mazeGrid.maze[next.getX(),next.getY()].getValue() == '#' || mazeGrid.maze[next.getX(), next.getY()].getValue() == '%')
+            {
+                return true;
+            }
+            return false;
         }
-        public void moveDown()
+        public void  moveLeft(Cell current,Cell next)
         {
-            mazeGrid.maze[X, Y].setValue(previousItem);
-            showPreviousItem();
-            setX(X + 1);
-            setPreviousItem();
-            draw();
+
+            moveGhostToNextCell(current, next);
+        }
+        public void moveRight(Cell current,Cell next)
+        {
+            moveGhostToNextCell(current, next);
+        }
+        public void moveUp(Cell current,Cell next)
+        {
+            moveGhostToNextCell(current, next);
+
+        }
+        public void moveDown(Cell current,Cell next)
+        {
+            moveGhostToNextCell(current, next);
         }
         public int generateRandom()
         {

@@ -123,5 +123,9 @@ namespace pacman.BL
                 Console.Write('\n');
             }
         }
+       /* public bool isStoppingCondition()
+        {
+            if()
+        }*/
     }
 }
