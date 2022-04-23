@@ -30,16 +30,17 @@ namespace pacman.BL
         private Cell currentGhostCell;
         private Grid mazeGrid;
         private string ghostMovingPosition; //This will help in deciding to move in case of vertical or horizontal
+        Random rd = new Random();
         public void setX(int X)
         {
-            if (X != 0 && (X != mazeGrid.getRowSize()-1))
+            if ((mazeGrid.maze[X,Y].getValue()) != '#' && (mazeGrid.maze[X, Y].getValue()) != '%')
             {
                 this.X = X;
             }
         }
         public void setY(int Y)
         {
-            if((Y != mazeGrid.getColSize()-1) && Y !=0)
+            if((mazeGrid.maze[X,Y].getValue()) != '#' && (mazeGrid.maze[X, Y].getValue()) != '%')
             {
                 this.Y = Y;
             }
@@ -154,6 +155,10 @@ namespace pacman.BL
                 {
                     moveVertical();
                 }
+                else if(ghostCharacter == 'R')
+                {
+                    moveRandom();
+                }
                 setDeltaToZero();
             }
         }
@@ -169,14 +174,50 @@ namespace pacman.BL
                 moveRight();
             }
         }
+        public void moveVertical()
+        {
+            setGhostPosition(); //reversing the direction of ghost if ghost is blocked
+            if (ghostMovingPosition == "up")
+            {
+                moveUp();
+            }
+            else if (ghostMovingPosition == "down")
+            {
+                moveDown();
+            }
+        }
+        public void moveRandom()
+        {
+            int direction = getRandomNumber();
+            if(direction == 1)
+            {
+                moveRight();
+            }
+            else if(direction == 2)
+            {
+                moveLeft();
+            }
+            else if(direction == 3)
+            {
+                moveDown();
+            }
+            else if(direction == 4)
+            {
+                moveUp();
+            }
+        }
+        public int getRandomNumber()
+        {
+            int num = rd.Next(1, 5);
+            return num;
+        }
         public void moveLeft()
         {
             mazeGrid.maze[X, Y].setValue(previousItem);
             showPreviousItem();
             setY(Y - 1);
             setPreviousItem();
-            draw();
-            
+            draw();     
         }
         public void moveRight()
         {
@@ -185,8 +226,6 @@ namespace pacman.BL
             setY(Y + 1);
             setPreviousItem();
             draw();
-            
-
         }
         public void moveUp()
         {
@@ -203,18 +242,6 @@ namespace pacman.BL
             setX(X + 1);
             setPreviousItem();
             draw();
-        }
-        public void moveVertical()
-        {
-            setGhostPosition(); //reversing the direction of ghost if ghost is blocked
-            if(ghostMovingPosition == "up")
-            {
-                moveUp();
-            }
-            else if(ghostMovingPosition == "down")
-            {
-                moveDown();
-            }
         }
         public int generateRandom()
         {

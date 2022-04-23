@@ -13,10 +13,12 @@ namespace pacman.BL
             this.x = x;
             this.y = y;
             this.mazeGrid = mazeGrid;
+            this.pacmanCurrentCell = new Cell(x, y, 'P');
         }
         private int x;
         private int y;
         private int score;
+        Cell pacmanCurrentCell;
         private Grid mazeGrid;
         public void setX(int x)
         {
@@ -49,6 +51,37 @@ namespace pacman.BL
             mazeGrid.maze[x, y] = pacman;
             Console.SetCursorPosition(y, x);
             Console.Write(pacman.getValue());
+        }
+        public void remove()
+        {
+            pacmanCurrentCell.setValue(' ');
+            mazeGrid.maze[x, y] = pacmanCurrentCell;
+            Console.SetCursorPosition(y, x);
+            Console.Write(pacmanCurrentCell.getValue());
+        }
+        public void moveLeft()
+        {
+            remove();
+            setY(y - 1);
+            draw();
+        }
+        public void moveRight()
+        {
+            remove();
+            setY(y + 1);
+            draw();
+        }
+        public void moveUp()
+        {
+            remove();
+            setX(x - 1);
+            draw();
+        }
+        public void moveDown()
+        {
+            remove();
+            setX(x + 1);
+            draw();
         }
 
     }
