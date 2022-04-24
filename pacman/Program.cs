@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using pacman.BL;
-using pacman.UI;
-using pacman.DL;
 using System.Threading;
 namespace pacman
 {

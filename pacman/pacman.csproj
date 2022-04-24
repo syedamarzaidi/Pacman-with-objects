@@ -47,10 +47,8 @@
     <Compile Include="BL\Ghost.cs" />
     <Compile Include="BL\Grid.cs" />
     <Compile Include="BL\Pacman.cs" />
-    <Compile Include="DL\GridDL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\GridUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
