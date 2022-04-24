@@ -19,6 +19,7 @@ namespace pacman.BL
             this.currentGhostCell = new Cell(X, Y, this.ghostCharacter);
             this.mazeGrid = mazeGrid;
             this.ghostMovingPosition = ghostDirection;
+            this.smartCount = 0;
         }
         private int X;
         private int Y;
@@ -30,6 +31,8 @@ namespace pacman.BL
         private Cell currentGhostCell;
         private Grid mazeGrid;
         private string ghostMovingPosition; //This will help in deciding to move in case of vertical or horizontal
+        private int smartCount;//to move smart and as well as random
+        public bool flag = true;
         Random rd = new Random();
         public void setX(int X)
         {
@@ -62,7 +65,7 @@ namespace pacman.BL
         {
             if ((Y == mazeGrid.getColSize() - 2) || Y == 1)
             {
-                //this if condition will change ghost direction variable if 
+                // helping horizontal ghost to change his direction 
                 if (ghostMovingPosition == "left")
                 {
                     this.ghostMovingPosition = "right";
@@ -74,6 +77,7 @@ namespace pacman.BL
             }
             else if(X == mazeGrid.getRowSize()-2 || X == 1)
             {
+                //Helping vertical ghost to change his direction
                 if (ghostMovingPosition == "up")
                 {
                     this.ghostMovingPosition = "down";
@@ -155,7 +159,7 @@ namespace pacman.BL
                 }
                 else if(ghostCharacter == 'R')
                 {
-                    moveRandom();
+                    moveRandom('R');
                 }
                 setDeltaToZero();
             }
@@ -186,10 +190,10 @@ namespace pacman.BL
                 moveDown(ghostCurrentCell,mazeGrid.getDownCell(ghostCurrentCell));
             }
         }
-        public void moveRandom()
+        public void moveRandom(char ghostCharacter)
         {
-            int direction = getRandomNumber();
-            Cell ghost = mazeGrid.findGhost('R');
+            int direction = generateRandom();
+            Cell ghost = mazeGrid.findGhost(ghostCharacter);
             if (direction == 1)
             {
                 moveRight(ghost,mazeGrid.getRightCell(ghost));
@@ -207,7 +211,7 @@ namespace pacman.BL
                 moveUp(ghost,mazeGrid.getUpCell(ghost));
             }
         }
-        public int getRandomNumber()
+        public int generateRandom()
         {
             int num = rd.Next(1, 5);
             return num;
@@ -245,23 +249,94 @@ namespace pacman.BL
         public void moveUp(Cell current,Cell next)
         {
             moveGhostToNextCell(current, next);
-
         }
         public void moveDown(Cell current,Cell next)
         {
             moveGhostToNextCell(current, next);
         }
-        public int generateRandom()
-        {
-            return 0;
-        }
         public void moveSmart()
         {
-
+            Cell ghost = mazeGrid.findGhost('S');
+            Cell pacman = mazeGrid.findPacman();
+            string command = decideSmartDirection(ghost, pacman);
+            if(flag == true)
+            {
+                if (command != null)
+                {
+                    if (command == "left")
+                    {
+                        moveLeft(ghost, mazeGrid.getLeftCell(ghost));
+                    }
+                    else if (command == "right")
+                    {
+                        moveRight(ghost, mazeGrid.getRightCell(ghost));
+                    }
+                    else if (command == "up")
+                    {
+                        moveUp(ghost, mazeGrid.getUpCell(ghost));
+                    }
+                    else if (command == "down")
+                    {
+                        moveDown(ghost, mazeGrid.getDownCell(ghost));
+                    }
+                    flag = false;
+                }
+            }
+            else
+            {
+                moveRandom('S');
+                flag = true;
+            }
+        }
+        public string decideSmartDirection(Cell currentGhostCell,Cell pacmanLocation)
+        {
+            Cell up = mazeGrid.getUpCell(currentGhostCell);
+            Cell down = mazeGrid.getDownCell(currentGhostCell);
+            Cell left = mazeGrid.getLeftCell(currentGhostCell);
+            Cell right = mazeGrid.getRightCell(currentGhostCell);
+            double distanceRight = 11111;
+            double distanceLeft = 11111;
+            double distanceUp = 11111;
+            double distanceDown = 11111;
+            if (right.getValue() != '#' && right.getValue() != '%')
+            {
+                distanceRight = calculateDistance(right, mazeGrid.findPacman());
+            }
+            if (up.getValue() != '#' && up.getValue() != '%')
+            {
+                distanceUp = calculateDistance(up, mazeGrid.findPacman());
+            }
+            if (down.getValue() != '#' && down.getValue() != '%')
+            {
+                distanceDown = calculateDistance(down, mazeGrid.findPacman());
+            }
+            if (left.getValue() != '#' && left.getValue() != '%')
+            {
+                 distanceLeft = calculateDistance(left, mazeGrid.findPacman());
+            }
+            double dis = Math.Min(distanceUp, Math.Min(distanceDown, Math.Min(distanceRight, distanceLeft)));
+            if(dis == distanceDown)
+            {
+                return "down";
+            }
+            else if(dis == distanceUp)
+            {
+                return "up";
+            }
+            else if(dis == distanceRight)
+            {
+                return "right";
+            }
+            else if(dis == distanceLeft)
+            {
+                return "left";
+            }
+            return null;
         }
         public double calculateDistance(Cell currentGhostCell,Cell pacmanLocation)
         {
-            return 0;
+            double distance = Math.Sqrt(Math.Pow((currentGhostCell.getY() - pacmanLocation.getY()), 2) + Math.Pow((currentGhostCell.getX() - pacmanLocation.getX()), 2));
+            return distance;
         }
     }
 }

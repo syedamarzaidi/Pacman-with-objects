@@ -40,7 +40,7 @@ namespace pacman.BL
         {
             int x = c.getX();
             int y = c.getY();
-            char value = c.getValue();
+            char value = maze[x,y-1].getValue();
             Cell leftCell = new Cell(x, y - 1, value);
             return leftCell;
         }
@@ -48,7 +48,7 @@ namespace pacman.BL
         {
             int x = c.getX();
             int y = c.getY();
-            char value = c.getValue();
+            char value = maze[x,y+1].getValue();
             Cell RightCell = new Cell(x, y + 1, value);
             return RightCell;
         }
@@ -56,7 +56,7 @@ namespace pacman.BL
         {
             int x = c.getX();
             int y = c.getY();
-            char value = c.getValue();
+            char value = maze[x-1,y].getValue();
             Cell UpCell = new Cell(x-1, y, value);
             return UpCell;
         }
@@ -64,7 +64,7 @@ namespace pacman.BL
         {
             int x = c.getX();
             int y = c.getY();
-            char value = c.getValue();
+            char value = maze[x+1,y].getValue();
             Cell downCell = new Cell(x+1, y, value);
             return downCell;
         }

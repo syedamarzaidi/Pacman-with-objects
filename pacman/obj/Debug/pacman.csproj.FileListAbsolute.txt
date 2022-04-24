@@ -3,3 +3,4 @@ c:\users\kali\documents\visual studio 2015\Projects\pacman\pacman\bin\Debug\pacm
 c:\users\kali\documents\visual studio 2015\Projects\pacman\pacman\bin\Debug\pacman.pdb
 c:\users\kali\documents\visual studio 2015\Projects\pacman\pacman\obj\Debug\pacman.exe
 c:\users\kali\documents\visual studio 2015\Projects\pacman\pacman\obj\Debug\pacman.pdb
+C:\Users\kali\documents\visual studio 2015\Projects\pacman\pacman\obj\Debug\pacman.csprojResolveAssemblyReference.cache
