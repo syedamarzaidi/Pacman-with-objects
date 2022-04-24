@@ -19,7 +19,7 @@ namespace pacman.BL
             this.currentGhostCell = new Cell(X, Y, this.ghostCharacter);
             this.mazeGrid = mazeGrid;
             this.ghostMovingPosition = ghostDirection;
-            this.smartCount = 0;
+            this.smartFlag = true;
         }
         private int X;
         private int Y;
@@ -31,8 +31,7 @@ namespace pacman.BL
         private Cell currentGhostCell;
         private Grid mazeGrid;
         private string ghostMovingPosition; //This will help in deciding to move in case of vertical or horizontal
-        private int smartCount;//to move smart and as well as random
-        public bool flag = true;
+        private bool smartFlag;
         Random rd = new Random();
         public void setX(int X)
         {
@@ -150,7 +149,6 @@ namespace pacman.BL
             {
                 if(ghostCharacter == 'H')
                 {
-
                     moveHorizontal();
                 }
                 else if(ghostCharacter == 'V')
@@ -160,6 +158,10 @@ namespace pacman.BL
                 else if(ghostCharacter == 'R')
                 {
                     moveRandom('R');
+                }
+                else if(ghostCharacter == 'S')
+                {
+                    moveSmart('S');
                 }
                 setDeltaToZero();
             }
@@ -220,6 +222,10 @@ namespace pacman.BL
         {
             if (!isObstacleNext(next))
             {
+                if (next.isPacmanPresent())
+                {
+                    mazeGrid.setIsPacmanCaught("CAUGHT");
+                }
                 mazeGrid.maze[current.getX(), current.getY()].setValue(previousItem);
                 Console.SetCursorPosition(current.getY(), current.getX());
                 Console.Write(previousItem);
@@ -239,7 +245,6 @@ namespace pacman.BL
         }
         public void  moveLeft(Cell current,Cell next)
         {
-
             moveGhostToNextCell(current, next);
         }
         public void moveRight(Cell current,Cell next)
@@ -254,12 +259,12 @@ namespace pacman.BL
         {
             moveGhostToNextCell(current, next);
         }
-        public void moveSmart()
+        public void moveSmart(char ghostCharacter)
         {
-            Cell ghost = mazeGrid.findGhost('S');
+            Cell ghost = mazeGrid.findGhost(ghostCharacter);
             Cell pacman = mazeGrid.findPacman();
             string command = decideSmartDirection(ghost, pacman);
-            if(flag == true)
+            if(smartFlag == true)
             {
                 if (command != null)
                 {
@@ -279,13 +284,13 @@ namespace pacman.BL
                     {
                         moveDown(ghost, mazeGrid.getDownCell(ghost));
                     }
-                    flag = false;
+                    smartFlag = false;
                 }
             }
             else
             {
                 moveRandom('S');
-                flag = true;
+                smartFlag = true;
             }
         }
         public string decideSmartDirection(Cell currentGhostCell,Cell pacmanLocation)

@@ -97,25 +97,31 @@ namespace pacman.BL
         }
         public void move()
         {
-          /*  Cell pacmanCurrentCell = mazeGrid.findPacman();
-            if (Keyboard.IsKeyPressed(Key.RightArrow))
-            {
-                moveRight(pacmanCurrentCell, mazeGrid.getRightCell(pacmanCurrentCell));
+            /*
+            Cell pacmanCurrentCell = mazeGrid.findPacman();
+            if (pacmanCurrentCell != null) {
+                if (Keyboard.IsKeyPressed(Key.RightArrow))
+                {
+                    moveRight(pacmanCurrentCell, mazeGrid.getRightCell(pacmanCurrentCell));
+                }
+                else if (Keyboard.IsKeyPressed(Key.LeftArrow))
+                {
+                    moveLeft(pacmanCurrentCell, mazeGrid.getLeftCell(pacmanCurrentCell));
+                }
+                else if (Keyboard.IsKeyPressed(Key.UpArrow))
+                {
+                    moveUp(pacmanCurrentCell, mazeGrid.getUpCell(pacmanCurrentCell));
+                }
+                else if (Keyboard.IsKeyPressed(Key.DownArrow))
+                {
+                    moveDown(pacmanCurrentCell, mazeGrid.getDownCell(pacmanCurrentCell));
+                }
             }
-            else if (Keyboard.IsKeyPressed(Key.LeftArrow))
+            if (Keyboard.IsKeyPressed(Key.Escape))
             {
-                moveLeft(pacmanCurrentCell, mazeGrid.getLeftCell(pacmanCurrentCell));
-            }
-            else if (Keyboard.IsKeyPressed(Key.UpArrow))
-            {
-                moveUp(pacmanCurrentCell, mazeGrid.getUpCell(pacmanCurrentCell));
-            }
-            else if (Keyboard.IsKeyPressed(Key.DownArrow))
-            {
-                moveDown(pacmanCurrentCell, mazeGrid.getDownCell(pacmanCurrentCell));
-            }
-            else if()
-            */
+                mazeGrid.setIsPacmanCaught("CAUGHT");
+            }     
+            */ 
         }
         public void printScore()
         {

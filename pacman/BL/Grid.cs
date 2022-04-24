@@ -11,15 +11,23 @@ namespace pacman.BL
     {
         private int rowSize;
         private int colSize;
+        private string isPacmanCaught;
        public Cell[,] maze;
 
         public Grid(int rowSize, int colSize, string path)
         {
             setRowSize(rowSize);
             setColSize(colSize);
+            isPacmanCaught = "NOT CAUGHT"; 
             maze = new Cell[rowSize, colSize];
             LoadMaze(path);
         }
+
+        public Grid()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void setRowSize(int rowSize)
         {
             this.rowSize = rowSize;
@@ -27,6 +35,10 @@ namespace pacman.BL
         public void setColSize(int colSize)
         {
             this.colSize = colSize;
+        }
+        public void setIsPacmanCaught(string status)
+        {
+            isPacmanCaught = status;
         }
         public int getRowSize()
         {
@@ -123,9 +135,13 @@ namespace pacman.BL
                 Console.Write('\n');
             }
         }
-       /* public bool isStoppingCondition()
+      public bool isStoppingCondition()
         {
-            if()
-        }*/
+            if(isPacmanCaught == "CAUGHT")
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

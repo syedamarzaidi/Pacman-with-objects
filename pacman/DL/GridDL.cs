@@ -11,8 +11,24 @@ namespace pacman.DL
 
     class GridDL
     {
-       // public static Cell[,] maze;
-       
+        public int Property
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public void Method()
+        {
+            throw new System.NotImplementedException();
+        }
+        // public static Cell[,] maze;
+
 
     }
 }
