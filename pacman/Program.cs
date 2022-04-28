@@ -13,13 +13,18 @@ namespace pacman
         {
             bool gameRunning = true;
             //Math.Floor function to decide objects to move
-            string path = "C:\\Users\\kali\\Documents\\Visual Studio 2015\\Projects\\pacman\\pacman\\files\\maze.txt";
+            string path = "maze.txt";
             Grid mazeGrid = new Grid(24, 71, path);
-            Pacman player = new Pacman(2, 69, mazeGrid);
-            Ghost ghost1 = new Ghost(22, 4, 'H', "left", 0.4f, ' ', mazeGrid); //Horizontal Ghost
-            Ghost ghost2 = new Ghost(2, 2, 'V', "down", 0.9f, ' ', mazeGrid); // Vertical ghost
-            Ghost ghost3 = new Ghost(9, 24, 'R', "random", 0.8f, ' ', mazeGrid); //  Random moving ghost
-            Ghost ghost4 = new Ghost(14, 24, 'S', "smart", 0.2f, ' ', mazeGrid);//Smart ghost
+            Cell pacmanLocation = mazeGrid.findPacman();
+            Cell horizontalGhostLocation = mazeGrid.findGhost('H');
+            Cell verticalGhostLocation = mazeGrid.findGhost('V');
+            Cell randomGhostLocation = mazeGrid.findGhost('R');
+            Cell smartGhost = mazeGrid.findGhost('S');
+            Pacman player = new Pacman(pacmanLocation.getX(), pacmanLocation.getY(), mazeGrid);
+            Ghost ghost1 = new Ghost(horizontalGhostLocation.getX(), horizontalGhostLocation.getY(), 'H', "left", 0.4f, ' ', mazeGrid); //Horizontal Ghost
+            Ghost ghost2 = new Ghost(verticalGhostLocation.getX(), verticalGhostLocation.getY(), 'V', "down", 0.9f, ' ', mazeGrid); // Vertical ghost
+            Ghost ghost3 = new Ghost(randomGhostLocation.getX(), randomGhostLocation.getY(), 'R', "random", 0.8f, ' ', mazeGrid); //  Random moving ghost
+            Ghost ghost4 = new Ghost(smartGhost.getX(), smartGhost.getY(), 'S', "smart", 0.6f, ' ', mazeGrid);//Smart ghost
             List<Ghost> enemies = new List<Ghost>();
             enemies.Add(ghost1);
             enemies.Add(ghost2);
@@ -27,14 +32,8 @@ namespace pacman
             enemies.Add(ghost4);
             mazeGrid.draw();
             player.draw();
-           /* ghost1.draw();
-            ghost2.draw();
-            ghost3.draw();
-            ghost4.draw();
-            */
             while (gameRunning)
             {
-                Console.ReadKey();
                 Thread.Sleep(90);
                 player.printScore();
                 player.move();
